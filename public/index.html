@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SiddFlix - Futuristic Movie Streaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Ambient Backlight -->
+  <div class="ambient-glow"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="#" class="brand-logo" id="logoLink">
+        <div class="logo-icon-wrapper">
+          <div class="logo-s-badge">S</div>
+        </div>
+        <div class="brand-text">
+          <span class="sidd-part">Sidd</span>
+          <span class="flix-part">Flix</span>
+          <span class="brand-dot"></span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#trending">Trending</a></li>
+        <li><a href="#movies">Movies</a></li>
+        <li><a href="#classics">Top IMDb</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-right">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search movies, genres..." />
+      </div>
+
+      <button id="btnOpenProviders" class="btn-providers-pill" title="ScreenScape Providers Network">
+        <span style="display:inline-block; width:8px; height:8px; background:#00f2fe; border-radius:50%; box-shadow:0 0 6px #00f2fe;"></span>
+        Providers & Servers
+      </button>
+
+      <div class="user-avatar" title="SiddFlix VIP Member">
+        S
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge" id="heroBadge">Featured Today</span>
+      <h1 class="hero-title" id="heroTitle">Loading Title...</h1>
+      
+      <div class="hero-meta">
+        <div class="meta-rating" id="heroRating">★ 8.8</div>
+        <span id="heroVotes" style="font-size:12px; color:#94a3b8;"></span>
+        <span id="heroYear">2024</span>
+        <span class="meta-age" id="heroAge">13+</span>
+        <span id="heroDuration">2h 30m</span>
+        <span class="meta-match" id="heroMatch">98% Match</span>
+      </div>
+
+      <p class="hero-desc" id="heroDesc">
+        Experience cinematic immersion with SiddFlix dynamic streaming powered by next-generation scraper network.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-play" id="btnHeroPlay">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5,3 19,12 5,21"></polygon>
+          </svg>
+          Play Movie
+        </button>
+        <button class="btn-more-info" id="btnHeroInfo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          More Details
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Movie Rows / Main Content -->
+  <main class="main-content" id="rowsContainer">
+    <!-- Populated dynamically by app.js -->
+  </main>
+
+  <!-- Video Player Modal -->
+  <div class="modal-backdrop" id="playerModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="modalClose">✕</button>
+      
+      <div class="player-container">
+        <video id="modalVideo" class="player-video" controls playsinline>
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+
+      <div class="modal-details">
+        <div class="modal-title-row">
+          <h2 class="modal-title" id="modalTitle">Movie Title</h2>
+          <span class="meta-rating" id="modalRating" style="font-size:15px;">★ 9.0</span>
+        </div>
+
+        <div style="font-size:13px; color:#cbd5e1; margin-bottom:14px;" id="modalYear">2024</div>
+
+        <p id="modalDesc" style="color:#94a3b8; line-height:1.6; margin-bottom:16px;"></p>
+
+        <div style="font-size:13px; color:#64748b; margin-bottom:4px;" id="modalCast"></div>
+        <div style="font-size:13px; color:#64748b; margin-bottom:16px;" id="modalDirector"></div>
+
+        <!-- Servers Selector from servers.json -->
+        <div class="server-selector-card">
+          <h4>🛰️ Select High-Speed Stream Server (Repo Fallback Network):</h4>
+          <div class="server-pill-list" id="serverPills">
+            <!-- Dynamic pills from servers.json -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Providers & Servers Modal -->
+  <div class="modal-backdrop" id="providersModal">
+    <div class="modal-window" style="max-width: 780px; padding: 26px;">
+      <button class="modal-close-btn" id="providersClose">✕</button>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:12px;">
+        <h3 style="font-size:20px; font-weight:800; color:#00f2fe;">🌐 ScreenScape Connected Providers</h3>
+        <span id="providersCount" style="font-size:13px; background:rgba(0,242,254,0.15); color:#00f2fe; padding:4px 10px; border-radius:12px;">0 Available</span>
+      </div>
+      <p style="font-size:13px; color:#94a3b8; margin-bottom:12px;">
+        All live scraper sources connected directly from this repository's <code>providers.json</code> & <code>servers.json</code>:
+      </p>
+      <div class="providers-modal-grid" id="providersGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="brand-text footer-logo">
+      <span class="sidd-part">Sidd</span>
+      <span class="flix-part">Flix</span>
+    </div>
+    <p>© 2026 SiddFlix Media Universe. Built with Next-Gen Streaming UI & ScreenScape Configuration.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

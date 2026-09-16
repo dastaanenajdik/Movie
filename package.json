@@ -1,0 +1,12 @@
+{
+  "name": "siddflix",
+  "version": "1.0.0",
+  "description": "SiddFlix - Futuristic Movie Streaming Platform powered by ScreenScape providers data",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["streaming", "movies", "siddflix", "netflix-clone"],
+  "author": "SiddFlix",
+  "license": "MIT"
+}

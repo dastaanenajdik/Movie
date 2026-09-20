@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SidFlix — Search. Discover. Watch.</title>
+  <meta name="description" content="SidFlix — movie & TV search, trailers, where-to-watch, plus free open-license movies playing right in your browser." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e50914'/%3E%3Cpath d='M26 18 L48 32 L26 46 Z' fill='white'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="header">
+    <a class="logo" href="#" id="logo-home" aria-label="SidFlix home">
+      <svg viewBox="0 0 64 64" class="logo-mark" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#e50914"/><path d="M26 18 L48 32 L26 46 Z" fill="#fff"/></svg>
+      <span>SID<span class="logo-accent">FLIX</span></span>
+    </a>
+
+    <nav class="nav">
+      <a href="#" data-nav="home" class="nav-link active">Home</a>
+      <a href="#" data-nav="open" class="nav-link">Open Movies</a>
+    </nav>
+
+    <form class="search" id="search-form" role="search">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search-input" type="search" placeholder="Search movies, shows…" autocomplete="off" aria-label="Search" />
+    </form>
+  </header>
+
+  <!-- TMDB setup hint (demo mode) -->
+  <div class="tmdb-hint" id="tmdb-hint" hidden>
+    ℹ️ Abhi <b>Open Movies mode</b> chal raha hai. Full movie/TV search unlock karne ke liye free
+    <code>TMDB_API_KEY</code> set karo — steps README me hain.
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero" hidden>
+    <div class="hero-backdrop" id="hero-backdrop"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag" id="hero-tag"></span>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-meta" id="hero-meta"></p>
+      <p class="hero-overview" id="hero-overview"></p>
+      <div class="hero-actions" id="hero-actions"></div>
+    </div>
+  </section>
+
+  <!-- ============ SEARCH RESULTS ============ -->
+  <main class="container">
+    <section id="results" class="results" hidden>
+      <h2 class="section-title" id="results-title"></h2>
+      <div class="grid" id="results-grid"></div>
+      <p class="empty" id="results-empty" hidden>Kuch nahi mila 🤔 — spelling check karke dubara try karo.</p>
+    </section>
+
+    <!-- ============ ROWS ============ -->
+    <div id="rows">
+      <section class="row" id="row-trending-sec">
+        <h2 class="section-title">🔥 Trending Now</h2>
+        <div class="row-track" id="row-trending"></div>
+      </section>
+
+      <section class="row" id="row-open-sec">
+        <h2 class="section-title">🎬 Open Movies <span class="pill">Free &amp; Legal — yahin chalao</span></h2>
+        <div class="row-track" id="row-open"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <p><b>SidFlix</b> — Search. Discover. Watch.</p>
+    <p class="foot-note">
+      "Open Movies" section me sirf Creative Commons / Public Domain titles aate hain, jo SidFlix ke player me
+      directly aur legally stream hote hain. Baaki titles ke liye trailer aur official watch-providers dikhaye jaate hain.
+    </p>
+    <p class="foot-note">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+  </footer>
+
+  <!-- ============ DETAILS MODAL ============ -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" data-close aria-label="Close">✕</button>
+      <div class="modal-banner" id="modal-banner"></div>
+      <div class="modal-body" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ============ PLAYER MODAL ============ -->
+  <div class="modal" id="player-modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel player-panel" role="dialog" aria-modal="true" aria-label="SidFlix Player">
+      <button class="modal-close" data-close aria-label="Close">✕</button>
+      <div class="player-head">
+        <h3 id="player-title">SidFlix Player</h3>
+        <span class="player-chip" id="player-kind" hidden></span>
+      </div>
+
+      <div class="video-wrap">
+        <video id="player-video" controls playsinline preload="metadata"></video>
+      </div>
+
+      <div class="player-tools">
+        <input id="player-url" type="url" placeholder="Koi bhi direct video URL paste karo (.mp4 / .webm / .m3u8)…" aria-label="Video URL" />
+        <button class="btn" id="player-load" type="button">Load</button>
+        <label class="btn ghost" for="player-file">📁 File se chalao</label>
+        <input id="player-file" type="file" accept="video/*,.mkv,.avi,.mov,.m2ts,.ts,.m3u8" hidden />
+      </div>
+      <p class="player-note">
+        Player: MP4 / WebM / OGG native + HLS (.m3u8) adaptive.
+        MKV / HEVC / AC3 browser-support par depend karta hai — best compatibility ke liye MP4 (H.264) ya HLS use karo.
+      </p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <noscript><p style="padding:2rem;text-align:center">SidFlix ko chalane ke liye JavaScript enable karo.</p></noscript>
+  <script src="/app.js" defer></script>
+</body>
+</html>
